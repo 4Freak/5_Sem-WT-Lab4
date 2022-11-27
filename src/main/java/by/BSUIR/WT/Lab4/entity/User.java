@@ -5,6 +5,7 @@ import java.io.Serializable;
 public class User implements Identifiable, Serializable{
 
 	private int id;
+	private String email;
 	private int userInformationId;
 	private int roleId;
 	
@@ -23,6 +24,14 @@ public class User implements Identifiable, Serializable{
 	
 	public void setId(int id) {
 		this.id = id;
+	}
+	
+	public String getEmail() {
+		return email;
+	}
+	
+	public void setEmail(String email) {
+		this.email = email;
 	}
 	
 	public int getUserInformationId() {
@@ -49,6 +58,7 @@ public class User implements Identifiable, Serializable{
 		
         User user = (User)obj;
         return id == user.id &&
+        		email.equals(user.email) &&
         		userInformationId == user.userInformationId &&
         		roleId == user.roleId;
 	}
@@ -58,6 +68,7 @@ public class User implements Identifiable, Serializable{
 		final int mul = 44;
 		int result = 4;
         result = mul * result +  id;
+        result = mul * result + ((email == null) ? 0 : email.hashCode());
         result = mul * result +  userInformationId;
         result = mul * result +  roleId;
         
@@ -68,6 +79,7 @@ public class User implements Identifiable, Serializable{
 	public String toString() {
 		final StringBuilder result = new StringBuilder("User{");
         result.append("id=").append(id);
+        result.append(", email=").append(email);
         result.append(", roleId='").append(roleId);
         result.append(", userInfoermationId=").append(userInformationId);
         result.append('}');
