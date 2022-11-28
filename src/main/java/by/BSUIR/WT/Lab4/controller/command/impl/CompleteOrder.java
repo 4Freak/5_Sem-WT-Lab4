@@ -7,6 +7,9 @@ import by.BSUIR.WT.Lab4.controller.command.CommandResult;
 import by.BSUIR.WT.Lab4.controller.command.CommandResultType;
 import by.BSUIR.WT.Lab4.controller.context.RequestContext;
 import by.BSUIR.WT.Lab4.controller.context.RequestContextHelper;
+import by.BSUIR.WT.Lab4.service.ServiceFactory;
+import by.BSUIR.WT.Lab4.service.exception.ServiceException;
+import by.BSUIR.WT.Lab4.service.intrfc.UserOrderService;
 
 public class CompleteOrder implements Command{
 
@@ -20,7 +23,7 @@ public class CompleteOrder implements Command{
 		RequestContext requestContext = helper.createContext();
 		try {
 			int userOrderId = Integer.parseInt(requestContext.getRequestParameter(userOrderId));
-			UserOrderServise userOrderService = ServiceFactory.getInstance().getUserOrderService();
+			UserOrderService userOrderService = ServiceFactory.getInstance().getUserOrderService();
 			userOrderService.updateStatusAtUserOrderById(userOrderId, confirmed);
 		}catch (ServiceException e) {
 			return new CommandResult(errorPage, CommandResultType.FORWARD);

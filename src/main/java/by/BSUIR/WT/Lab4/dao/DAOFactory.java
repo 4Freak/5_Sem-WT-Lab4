@@ -22,23 +22,23 @@ public class DAOFactory {
     private final UserOrderDAOImpl userOrderDao=new UserOrderDAOImpl();
     private final ApartmentDAOImp apartamentDao=new ApartmentDAOImp();
 
-    public UserDAOImpl getUserDao() {
+    public UserDAOImpl getUserDAO() {
         return userDao;
     }
 
-    public RoleDAOImpl getRoleDao() {
+    public RoleDAOImpl getRoleDAO() {
         return roleDao;
     }
 
-    public UserInformationDAOImpl getUserInformationDao() {
+    public UserInformationDAOImpl getUserInformationDAO() {
         return userInformationDao;
     }
 
-    public UserOrderDAOImpl getUserOrderDao() {
+    public UserOrderDAOImpl getUserOrderDAO() {
         return userOrderDao;
     }
 
-    public ApartmentDAOImp getApartamentDao() {
+    public ApartmentDAOImp getApartamentDAO() {
         return apartamentDao;
     }
 }
