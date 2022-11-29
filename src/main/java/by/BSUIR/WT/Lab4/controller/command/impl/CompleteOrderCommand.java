@@ -11,25 +11,25 @@ import by.BSUIR.WT.Lab4.service.ServiceFactory;
 import by.BSUIR.WT.Lab4.service.exception.ServiceException;
 import by.BSUIR.WT.Lab4.service.intrfc.UserOrderService;
 
-public class CompleteOrder implements Command{
+public class CompleteOrderCommand implements Command{
 
-	private static final String page = "command=viewOrders";
-	private static final String userOdrerId = "userOrderId";
-	private static final String errorPage = "WEB-INF/view/error.jsp";
-	private static final String confirmed = "confirmed";
+	private static final String PAGE 			= "command=viewOrders";
+	private static final String USER_ORDER_ID 	= "userOrderId";
+	private static final String ERROR_PAGE 		= "WEB-INF/view/error.jsp";
+	private static final String CONFIRMED 		= "confirmed";
 	
 	@Override
-	public CommandResult execute(RequestContextHelper helper, HttpServerResponse response) {
+	public CommandResult execute(RequestContextHelper helper, HttpServletResponse response) {
 		RequestContext requestContext = helper.createContext();
 		try {
 			int userOrderId = Integer.parseInt(requestContext.getRequestParameter(userOrderId));
 			UserOrderService userOrderService = ServiceFactory.getInstance().getUserOrderService();
-			userOrderService.updateStatusAtUserOrderById(userOrderId, confirmed);
+			userOrderService.updateStatusAtUserOrderById(userOrderId, CONFIRMED);
 		}catch (ServiceException e) {
-			return new CommandResult(errorPage, CommandResultType.FORWARD);
+			return new CommandResult(ERROR_PAGE, CommandResultType.FORWARD);
 		}
 		helper.updateRequest(requestContext);
-		return new CommandResult(page, CommandResultType.REDIRECT);
+		return new CommandResult(PAGE, CommandResultType.REDIRECT);
 	}
 	
 }

@@ -13,7 +13,7 @@ public class ApartmentDAOImp extends AbstractDAO<Apartment> implements Apartment
 	
     private static final String FIND_APPARTMENTS_BY_STATUS 		= "SELECT * FROM " + Table.APARTMENTS + " WHERE status=? ";
     private static final String FIND_APPARTMENTS_BY_PRICE 		= "SELECT * FROM " + Table.APARTMENTS + " WHERE price BETWEEN ? AND ? ";
-    private static final String SAVE_APARTMENT_QUERY 			= "INSERT INTO " + Table.APARTMENTS + " (status, price) VALUES (?, ?)";
+    private static final String SAVE_APARTMENT_QUERY 			= "INSERT INTO " + Table.APARTMENTS + " (status, number, price) VALUES (?, ?, ?)";
     private static final String UPDATE_APARTMENT_BY_ID			= "UPDATE " + Table.APARTMENTS + " SET status=? price=? WHERE id=?";
     private static final String UPDATE_APARTMENT_STATUS_BY_ID	= "UPDATE " + Table.APARTMENTS + " SET status=?  WHERE id=?";
 
@@ -23,7 +23,7 @@ public class ApartmentDAOImp extends AbstractDAO<Apartment> implements Apartment
 
     @Override
     public int save(Apartment apartment) throws DAOException {
-        return executeInsertQuery(SAVE_APARTMENT_QUERY, apartment.getStatus(), apartment.getPrice());
+        return executeInsertQuery(SAVE_APARTMENT_QUERY, apartment.getStatus(), apartment.getNumber(), apartment.getPrice());
     }
 
     @Override

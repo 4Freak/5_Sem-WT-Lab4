@@ -30,20 +30,22 @@ public class ApartmentServiceImpl implements ApartmentService{
 	}
 	
 	@Override
-	public boolean addNewApartment(String status, String price) throws ServiceException {
-		if (status == null || price == null) {
+	public boolean addNewApartment(String status, String number, String price) throws ServiceException {
+		if (status == null || number == null || price == null) {
 			return false;
 		}
 		
 		double dblPrice;
+		int intNumber;
 		try {
 			dblPrice = Double.parseDouble(price);
+			intNumber = Integer.parseInt(number);
 		}catch(NumberFormatException e) {
 			throw new ServiceException(e.getMessage(), e);
 		}
 		
 		ApartmentDAO apartmentDAO = DAOFactory.getInstance().getApartamentDAO();
-		Apartment apartment = buildApartment(status, dblPrice);
+		Apartment apartment = buildApartment(status, intNumber, dblPrice);
 		try {
 			apartmentDAO.save(apartment);
 			return true;
@@ -65,6 +67,22 @@ public class ApartmentServiceImpl implements ApartmentService{
 			throw new ServiceException(e.getMessage(), e);
 		}
 	}
+	
+    @Override
+    public List<Apartment> retriveApartamentsByUserId(int userId) throws ServiceException {
+        try {
+            UserOrderDAO userOrderDao=DAOFactory.getInstance().getUserOrderDAO();
+            List<UserOrder> userOrders=userOrderDao.findByUserId(userId);
+            List<Apartment> result=new ArrayList<>();
+            ApartmentDAO apartamentDao= DAOFactory.getInstance().getApartamentDAO();
+            for (UserOrder userOrder : userOrders) {
+                result.add(apartamentDao.finndById(userOrder.getApartmentId()).get());
+            }
+            return result;
+        } catch (DAOException e) {
+            throw new ServiceException(e.getMessage(), e);
+        }
+    }
 	
 	@Override
 	public Optional<Apartment> retriveApartmentById(int apartmentId) throws ServiceException {
@@ -105,22 +123,24 @@ public class ApartmentServiceImpl implements ApartmentService{
     }
     
     @Override
-    public boolean updateApartmentInforamtion(String id, String status, String price) throws ServiceException {
+    public boolean updateApartmentInforamtion(String id, String status, String number, String price) throws ServiceException {
     	if(status == null || price == null){
             return false;
         }
 
         double dblPrice;
         int intId;
+        int intNumber;
         try{
         	dblPrice = Double.parseDouble(price);
         	intId = Integer.parseInt(id);
+        	intNumber = Integer.parseInt(number);
         }catch (NumberFormatException e) {
         	throw new ServiceException(e.getMessage(), e);
         }
 
         ApartmentDAO apartamentDAO = DAOFactory.getInstance().getApartamentDAO();
-        Apartment apartment = buildApartment(status, dblPrice);
+        Apartment apartment = buildApartment(status, intNumber, dblPrice);
         try {
             apartamentDAO.updateApartmentById(intId, apartment);
             return true;
@@ -139,9 +159,10 @@ public class ApartmentServiceImpl implements ApartmentService{
         }
     }
     
-	private Apartment buildApartment(String status, double price) {
+	private Apartment buildApartment(String status, int number, double price) {
 		Apartment apartment = new Apartment();
 		apartment.setStatus(status);
+		apartment.setNumber(number);
 		apartment.setPrice(price);
 		return apartment;
 	}

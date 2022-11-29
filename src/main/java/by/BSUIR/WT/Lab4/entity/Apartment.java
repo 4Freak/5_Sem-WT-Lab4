@@ -6,6 +6,7 @@ public class Apartment implements Identifiable, Serializable{
 
 	private int id;
 	private String status;
+	private int number;
 	private double price;
 
 	public Apartment() {}
@@ -33,6 +34,14 @@ public class Apartment implements Identifiable, Serializable{
 		this.status = status;
 	}
 	
+	public int getNumber () {
+		return number;
+	}
+	
+	public void setNumber(int number) {
+		this.number = number;
+	}
+	
 	public double getPrice() {
 		return price;
 	}
@@ -49,6 +58,7 @@ public class Apartment implements Identifiable, Serializable{
         
         Apartment apartment = (Apartment)obj;
         return id == apartment.id &&
+        		number == apartment.number &&
         		status.equals(apartment.status) &&
         		Math.abs(price - apartment.price) < 0.01;
 	}
@@ -58,8 +68,9 @@ public class Apartment implements Identifiable, Serializable{
 		final int mul = 44;
 		int result = 4;
 		result = mul*result + id;
+		result = mul*result + number;
 		result = mul*result + (int) price;
-		result = mul * result + ((status == null) ? 0 : status.hashCode());
+		result = mul*result + ((status == null) ? 0 : status.hashCode());
 		return result;
 	}
 	
@@ -68,6 +79,7 @@ public class Apartment implements Identifiable, Serializable{
 		final StringBuilder result = new StringBuilder("Product{");
         result.append("id=").append(id);
         result.append(", status=").append(status);
+        result.append(", number=").append(number);
         result.append(", price=").append(price);
         result.append('}');
 		return result.toString();

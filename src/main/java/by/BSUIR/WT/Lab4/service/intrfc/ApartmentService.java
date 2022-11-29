@@ -14,7 +14,8 @@ public interface ApartmentService {
 	void removeApartmentById(int userId) throws ServiceException;
 	List<Apartment> retriveApartmentByStatus(String status) throws ServiceException;
 	List<Apartment> retrieveApartamentsByUserOrders(List<UserOrder> userOrder) throws ServiceException;
-	boolean addNewApartment(String status, String price) throws ServiceException;
+	boolean addNewApartment(String status, String number, String price) throws ServiceException;
 	void updateApartmentStatusById(int id, String status) throws ServiceException;
-	boolean updateApartmentInforamtion(String id, String status, String price) throws ServiceException;
+	boolean updateApartmentInforamtion(String id, String status, String number, String price) throws ServiceException;
+	List<Apartment> retriveApartamentsByUserId(int userId) throws ServiceException;
 }
